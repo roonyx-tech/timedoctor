@@ -22,6 +22,17 @@ module Timedoctor
       exchange :post, '/v1.1/companies/invites', params
     end
 
+    def payrolls(params)
+      company_id = extract :company_id, params
+      exchange :get, "/v1.1/companies/#{company_id}/payrolls", params
+    end
+
+    def update_payroll(params)
+      company_id = extract :company_id, params
+      payroll_id = extract :payroll_id, params
+      exchange :put, "/v1.1/companies/#{company_id}/payrolls/#{payroll_id}", params
+    end
+
     def absent_and_late(params)
       company_id = extract :company_id, params
       exchange :get, "/v1.1/companies/#{company_id}/absent-and-late", params

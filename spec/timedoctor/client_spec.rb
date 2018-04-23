@@ -68,6 +68,31 @@ RSpec.describe Timedoctor::Client do
     end
   end
 
+  context 'payroll' do
+    let(:payroll_id) { 12 }
+
+    let!(:payrolls) do
+      stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/payrolls" \
+                         "?_format=json&access_token=#{token}")
+        .to_return(response)
+    end
+
+    let!(:update_payroll) do
+      stub_request(:put, "#{entry}/v1.1/companies/#{company_id}/payrolls/#{payroll_id}")
+        .to_return(response)
+    end
+
+    it '.payrolls' do
+      client.payrolls(company_id: company_id)
+      expect(payrolls).to have_been_requested
+    end
+
+    it '.update_payroll' do
+      client.update_payroll(company_id: company_id, payroll_id: payroll_id)
+      expect(update_payroll).to have_been_requested
+    end
+  end
+
   context 'poor time' do
     let!(:stub) do
       stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/poortime" \

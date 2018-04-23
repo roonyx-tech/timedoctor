@@ -46,7 +46,7 @@ module Timedoctor
 
     def extract(ext, params)
       extracted = params.delete(ext)
-      raise 'lal' unless extracted
+      raise ArgumentError, "'#{ext}' not found in params" unless extracted
       extracted
     end
 

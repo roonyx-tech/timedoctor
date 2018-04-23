@@ -87,6 +87,19 @@ RSpec.describe Timedoctor::Client do
     end
   end
 
+  context 'worklogs' do
+    let!(:stub) do
+      stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/worklogs" \
+                         "?_format=json&access_token=#{token}")
+        .to_return(response)
+    end
+
+    it '.worklogs' do
+      client.worklogs(company_id: company_id)
+      expect(stub).to have_been_requested
+    end
+  end
+
   context 'web and app' do
     let!(:stub) do
       stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/webandapp" \

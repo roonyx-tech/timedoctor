@@ -37,6 +37,11 @@ module Timedoctor
       exchange :get, "/v1.1/companies/#{company_id}/poortime", params
     end
 
+    def worklogs(params)
+      company_id = extract :company_id, params
+      exchange :get, "/v1.1/companies/#{company_id}/worklogs", params
+    end
+
     def web_and_app(params)
       company_id = extract :company_id, params
       exchange :get, "/v1.1/companies/#{company_id}/webandapp", params

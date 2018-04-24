@@ -140,7 +140,7 @@ RSpec.describe Timedoctor::Client do
     end
 
     it '.worklogs' do
-      client.worklogs(company_id: company_id)
+      client.worklogs(company_isd: company_id)
       expect(stub).to have_been_requested
     end
   end

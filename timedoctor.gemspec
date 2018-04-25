@@ -4,7 +4,7 @@ require 'version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'timedoctor'
-  spec.version       = Timedoctor::VERSION
+  spec.version       = TimeDoctor::VERSION
   spec.authors       = ['Eugene Yak']
   spec.email         = ['geneayak@gmail.com']
 

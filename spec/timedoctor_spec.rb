@@ -1,5 +1,5 @@
-RSpec.describe Timedoctor do
+RSpec.describe TimeDoctor do
   it 'has a version number' do
-    expect(Timedoctor::VERSION).not_to be nil
+    expect(TimeDoctor::VERSION).not_to be nil
   end
 end

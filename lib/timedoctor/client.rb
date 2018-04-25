@@ -1,94 +1,55 @@
-require 'faraday'
-require 'json'
+require_relative 'client/base'
 
-module Timedoctor
+require_relative 'client/absent_late'
+require_relative 'client/companies'
+require_relative 'client/payrolls'
+require_relative 'client/poortime'
+require_relative 'client/projects'
+require_relative 'client/tasks'
+require_relative 'client/users'
+require_relative 'client/web_app'
+require_relative 'client/worklogs'
+
+module TimeDoctor
   class Client
-    ENTRY = 'https://webapi.timedoctor.com/'.freeze
-
     def initialize(token)
       @token = token
-      @conn = Faraday.new(url: ENTRY)
+    end
+
+    def absent_and_late
+      TimeDoctor::AbsentAndLate.new(@token)
     end
 
     def companies
-      exchange :get, '/v1.1/companies'
+      TimeDoctor::Companies.new(@token)
     end
 
-    def create_company(params)
-      exchange :post, '/v1.1/companies', params
+    def payrolls
+      TimeDoctor::Payrolls.new(@token)
     end
 
-    def invite_user(params)
-      exchange :post, '/v1.1/companies/invites', params
+    def poortime
+      TimeDoctor::Poortime.new(@token)
     end
 
-    def payrolls(params)
-      company_id = extract :company_id, params
-      exchange :get, "/v1.1/companies/#{company_id}/payrolls", params
+    def projects
+      TimeDoctor::Projects.new(@token)
     end
 
-    def update_payroll(params)
-      company_id = extract :company_id, params
-      payroll_id = extract :payroll_id, params
-      exchange :put, "/v1.1/companies/#{company_id}/payrolls/#{payroll_id}", params
+    def tasks
+      TimeDoctor::Tasks.new(@token)
     end
 
-    def absent_and_late(params)
-      company_id = extract :company_id, params
-      exchange :get, "/v1.1/companies/#{company_id}/absent-and-late", params
+    def users
+      TimeDoctor::Users.new(@token)
     end
 
-    def edit_absent_and_late(params)
-      company_id = extract :company_id, params
-      exchange :put, "/v1.1/companies/#{company_id}/absent-and-late", params
+    def web_and_app
+      TimeDoctor::WebAndApp.new(@token)
     end
 
-    def poor_time(params)
-      company_id = extract :company_id, params
-      exchange :get, "/v1.1/companies/#{company_id}/poortime", params
-    end
-
-    def users(params)
-      company_id = extract :company_id, params
-      exchange :get, "/v1.1/companies/#{company_id}/users", params
-    end
-
-    def user(params)
-      company_id = extract :company_id, params
-      user_id = extract :user_id, params
-      exchange :get, "/v1.1/companies/#{company_id}/users/#{user_id}", params
-    end
-
-    def worklogs(params)
-      company_id = extract :company_id, params
-      exchange :get, "/v1.1/companies/#{company_id}/worklogs", params
-    end
-
-    def web_and_app(params)
-      company_id = extract :company_id, params
-      exchange :get, "/v1.1/companies/#{company_id}/webandapp", params
-    end
-
-    private
-
-    def extract(ext, params)
-      params.delete(ext) { raise ArgumentError, "'#{ext}' not found in params" }
-    end
-
-    def exchange(method, url, params = {})
-      params[:access_token] = @token
-      params[:_format] = :json
-
-      response = @conn.send method, url, params
-
-      case response.status
-      when 200
-        JSON.parse response.body
-      when 401
-        raise 'NOT AUTH'
-      else
-        raise "#{response.status} FUUU"
-      end
+    def worklogs
+      TimeDoctor::Worklogs.new(@token)
     end
   end
 end

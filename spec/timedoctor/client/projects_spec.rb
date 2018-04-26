@@ -12,8 +12,9 @@ RSpec.describe TimeDoctor::Projects do
   end
 
   let!(:delete_stub) do
-    stub_request(:delete, "#{entry}/v1.1/companies/#{company_id}/users/#{user_id}/projects/#{project_id}" \
-                          "?_format=json&access_token=#{token}")
+    stub_request(:delete,
+                 "#{entry}/v1.1/companies/#{company_id}/users/#{user_id}/projects/#{project_id}" \
+                 "?_format=json&access_token=#{token}")
       .to_return(response)
   end
 

@@ -12,8 +12,12 @@ module TimeDoctor
 
     private
 
-    def extract(ext, params)
-      params.delete(ext) { raise ArgumentError, "'#{ext}' not found in params" }
+    def extract(params, *exts)
+      extracted = []
+      exts.each do |ext|
+        extracted << params.delete(ext) { raise ArgumentError, "'#{ext}' not found in params" }
+      end
+      extracted.count > 1 ? extracted : extracted.first
     end
 
     def exchange(method, url, params = {})

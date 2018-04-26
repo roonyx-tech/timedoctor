@@ -7,6 +7,7 @@ module Declarations
   let(:token)      { SecureRandom.hex(10) }
   let(:client)     { described_class.new token }
   let(:company_id) { Random.new.rand(1000) }
+  let(:project_id) { Random.new.rand(1000) }
   let(:payroll_id) { Random.new.rand(1000) }
   let(:user_id)    { Random.new.rand(1000) }
   let(:task_id)    { Random.new.rand(1000) }

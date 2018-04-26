@@ -18,15 +18,17 @@ module TimeDoctor
 
     def exchange(method, url, params = {})
       params[:access_token] = @token
-      params[:_format] = :json
+      params[:_format]      = :json
+
       response = @conn.send method, url, params
+
       case response.status
       when 200
-        JSON.parse response.body
+        JSON.parse(response.body, symbolize_names: true)
       when 401
-        raise 'NOT AUTH'
+        raise UnauthorizedError, response
       else
-        raise "#{response.status} FUUU"
+        raise UnknownError, response
       end
     end
   end

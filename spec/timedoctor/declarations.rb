@@ -9,6 +9,7 @@ module Declarations
   let(:company_id) { Random.new.rand(1000) }
   let(:payroll_id) { Random.new.rand(1000) }
   let(:user_id)    { Random.new.rand(1000) }
+  let(:task_id)    { Random.new.rand(1000) }
   let(:response) do
     {
       status: 200,

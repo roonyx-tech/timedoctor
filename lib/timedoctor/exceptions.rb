@@ -28,4 +28,6 @@ module TimeDoctor
   class UnauthorizedError < TimeDoctorError; end
 
   class UnknownError < TimeDoctorError; end
+
+  class InvalidRefreshTokenError < TimeDoctorError; end
 end

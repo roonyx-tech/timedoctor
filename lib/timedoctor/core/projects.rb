@@ -1,39 +1,33 @@
 module TimeDoctor
   module Core
     class Projects < Base
-      def list(params)
-        company_id, user_id = extract params, :company_id, :user_id
+      def list(company_id:, user_id:, **params)
         exchange :get, "/v1.1/companies/#{company_id}/users/#{user_id}/projects", params
       end
 
-      def create(params)
-        company_id, user_id = extract params, :company_id, :user_id
+      def create(company_id:, user_id:, **params)
         exchange :post, "/v1.1/companies/#{company_id}/users/#{user_id}/projects", params
       end
 
-      def delete(params)
-        company_id, user_id, project_id = extract params, :company_id, :user_id, :project_id
+      def delete(company_id:, user_id:, project_id:, **params)
         exchange :delete,
                  "/v1.1/companies/#{company_id}/users/#{user_id}/projects/#{project_id}",
                  params
       end
 
-      def info(params)
-        company_id, user_id, project_id = extract params, :company_id, :user_id, :project_id
+      def info(company_id:, user_id:, project_id:, **params)
         exchange :get,
                  "/v1.1/companies/#{company_id}/users/#{user_id}/projects/#{project_id}",
                  params
       end
 
-      def assign_user(params)
-        company_id, user_id, project_id = extract params, :company_id, :user_id, :project_id
+      def assign_user(company_id:, user_id:, project_id:, **params)
         exchange :put,
                  "/v1.1/companies/#{company_id}/users/#{user_id}/projects/#{project_id}",
                  params
       end
 
-      def unassign_user(params)
-        company_id, user_id, project_id = extract params, :company_id, :user_id, :project_id
+      def unassign_user(company_id:, user_id:, project_id:, **params)
         exchange :delete,
                  "/v1.1/companies/#{company_id}/users/#{user_id}/projects/#{project_id}/users",
                  params

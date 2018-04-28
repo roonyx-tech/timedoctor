@@ -1,14 +1,14 @@
-require_relative 'client/base'
+require_relative 'core/base'
 
-require_relative 'client/absent_late'
-require_relative 'client/companies'
-require_relative 'client/payrolls'
-require_relative 'client/poortime'
-require_relative 'client/projects'
-require_relative 'client/tasks'
-require_relative 'client/users'
-require_relative 'client/web_app'
-require_relative 'client/worklogs'
+require_relative 'core/absent_late'
+require_relative 'core/companies'
+require_relative 'core/payrolls'
+require_relative 'core/poortime'
+require_relative 'core/projects'
+require_relative 'core/tasks'
+require_relative 'core/users'
+require_relative 'core/web_app'
+require_relative 'core/worklogs'
 
 module TimeDoctor
   class Client

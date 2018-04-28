@@ -1,5 +1,5 @@
 RSpec.describe TimeDoctor::Client do
-  let(:client) { described_class.new token }
+  let(:core) { described_class.new token }
 
   it '.absent_and_late' do
     expect(client.absent_and_late).to be_a TimeDoctor::Core::AbsentAndLate

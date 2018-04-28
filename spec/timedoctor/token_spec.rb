@@ -49,7 +49,7 @@ RSpec.describe TimeDoctor::Token do
                          '&client_secret=CLIENT_SECRET' \
                          '&grant_type=refresh_token' \
                          '&refresh_token=REFRESH_TOKEN')
-        .to_return(status: 500, body: JSON.generate({}))
+        .to_return(status: 500, body: JSON.generate({error: true}))
     end
 
     it '#refresh' do

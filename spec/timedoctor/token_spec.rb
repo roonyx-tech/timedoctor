@@ -41,4 +41,24 @@ RSpec.describe TimeDoctor::Token do
         .to raise_error(TimeDoctor::InvalidRefreshTokenError)
     end
   end
+
+  context 'when unknown error' do
+    let!(:refresh_stub) do
+      stub_request(:get, "#{entry}/oauth/v2/token" \
+                         '?client_id=CLIENT_ID' \
+                         '&client_secret=CLIENT_SECRET' \
+                         '&grant_type=refresh_token' \
+                         '&refresh_token=REFRESH_TOKEN')
+        .to_return(status: 500, body: JSON.generate({}))
+    end
+
+    it '#refresh' do
+      params = { refresh_token: 'REFRESH_TOKEN',
+                 client_id:     'CLIENT_ID',
+                 client_secret: 'CLIENT_SECRET' }
+
+      expect { TimeDoctor::Token.refresh params }
+        .to raise_error(TimeDoctor::UnknownError)
+    end
+  end
 end

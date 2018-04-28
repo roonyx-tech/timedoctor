@@ -1,4 +1,4 @@
-RSpec.describe TimeDoctor::Poortime do
+RSpec.describe TimeDoctor::Core::Poortime do
   let!(:list_stub) do
     stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/poortime" \
                        "?_format=json&access_token=#{token}")

@@ -17,39 +17,39 @@ module TimeDoctor
     end
 
     def absent_and_late
-      TimeDoctor::AbsentAndLate.new(@token)
+      TimeDoctor::Core::AbsentAndLate.new(@token)
     end
 
     def companies
-      TimeDoctor::Companies.new(@token)
+      TimeDoctor::Core::Companies.new(@token)
     end
 
     def payrolls
-      TimeDoctor::Payrolls.new(@token)
+      TimeDoctor::Core::Payrolls.new(@token)
     end
 
     def poortime
-      TimeDoctor::Poortime.new(@token)
+      TimeDoctor::Core::Poortime.new(@token)
     end
 
     def projects
-      TimeDoctor::Projects.new(@token)
+      TimeDoctor::Core::Projects.new(@token)
     end
 
     def tasks
-      TimeDoctor::Tasks.new(@token)
+      TimeDoctor::Core::Tasks.new(@token)
     end
 
     def users
-      TimeDoctor::Users.new(@token)
+      TimeDoctor::Core::Users.new(@token)
     end
 
     def web_and_app
-      TimeDoctor::WebAndApp.new(@token)
+      TimeDoctor::Core::WebAndApp.new(@token)
     end
 
     def worklogs
-      TimeDoctor::Worklogs.new(@token)
+      TimeDoctor::Core::Worklogs.new(@token)
     end
   end
 end

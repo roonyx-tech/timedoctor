@@ -1,4 +1,4 @@
-RSpec.describe TimeDoctor::Companies do
+RSpec.describe TimeDoctor::Core::Companies do
   let!(:list_stub) do
     stub_request(:get, "#{entry}/v1.1/companies?_format=json&access_token=#{token}")
       .to_return(response)

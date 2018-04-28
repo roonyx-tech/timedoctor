@@ -1,4 +1,4 @@
-RSpec.describe TimeDoctor::Fake do
+RSpec.describe TimeDoctor::Core::Fake do
   let!(:success_stub) do
     stub_request(:post, "#{entry}/success")
       .to_return(response)

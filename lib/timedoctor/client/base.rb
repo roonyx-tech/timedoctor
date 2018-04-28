@@ -2,37 +2,39 @@ require 'faraday'
 require 'json'
 
 module TimeDoctor
-  class Base
-    ENTRY = 'https://webapi.timedoctor.com/'.freeze
+  module Core
+    class Base
+      ENTRY = 'https://webapi.timedoctor.com/'.freeze
 
-    def initialize(token)
-      @token = token
-      @conn = Faraday.new(url: ENTRY)
-    end
-
-    private
-
-    def extract(params, *exts)
-      extracted = []
-      exts.each do |ext|
-        extracted << params.delete(ext) { raise ArgumentError, "'#{ext}' not found in params" }
+      def initialize(token)
+        @token = token
+        @conn = Faraday.new(url: ENTRY)
       end
-      extracted.count > 1 ? extracted : extracted.first
-    end
 
-    def exchange(method, url, params = {})
-      params[:access_token] = @token
-      params[:_format]      = :json
+      private
 
-      response = @conn.send method, url, params
+      def extract(params, *exts)
+        extracted = []
+        exts.each do |ext|
+          extracted << params.delete(ext) { raise ArgumentError, "'#{ext}' not found in params" }
+        end
+        extracted.count > 1 ? extracted : extracted.first
+      end
 
-      case response.status
-      when 200
-        JSON.parse(response.body, symbolize_names: true)
-      when 401
-        raise UnauthorizedError, response
-      else
-        raise UnknownError, response
+      def exchange(method, url, params = {})
+        params[:access_token] = @token
+        params[:_format]      = :json
+
+        response = @conn.send method, url, params
+
+        case response.status
+        when 200
+          JSON.parse(response.body, symbolize_names: true)
+        when 401
+          raise UnauthorizedError, response
+        else
+          raise UnknownError, response
+        end
       end
     end
   end

@@ -1,4 +1,4 @@
-RSpec.describe TimeDoctor::WebAndApp do
+RSpec.describe TimeDoctor::Core::WebAndApp do
   let!(:list_stub) do
     stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/webandapp" \
                        "?_format=json&access_token=#{token}")

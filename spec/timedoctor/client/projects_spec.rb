@@ -1,4 +1,4 @@
-RSpec.describe TimeDoctor::Projects do
+RSpec.describe TimeDoctor::Core::Projects do
   let!(:list_stub) do
     stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/users/#{user_id}/projects" \
                        "?_format=json&access_token=#{token}")

@@ -1,4 +1,4 @@
-RSpec.describe TimeDoctor::AbsentAndLate do
+RSpec.describe TimeDoctor::Core::AbsentAndLate do
   let!(:list_stub) do
     stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/absent-and-late" \
                          "?_format=json&access_token=#{token}")

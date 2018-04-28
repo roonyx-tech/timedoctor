@@ -1,4 +1,4 @@
-RSpec.describe TimeDoctor::Payrolls do
+RSpec.describe TimeDoctor::Core::Payrolls do
   let!(:list_stub) do
     stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/payrolls" \
                          "?_format=json&access_token=#{token}")

@@ -1,4 +1,4 @@
-RSpec.describe TimeDoctor::Tasks do
+RSpec.describe TimeDoctor::Core::Tasks do
   let!(:list_stub) do
     stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/users/#{user_id}/tasks" \
                        "?_format=json&access_token=#{token}")

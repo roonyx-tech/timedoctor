@@ -12,6 +12,7 @@ module TimeDoctor
 
     def create_message
       message = indent("Code: #{@code}")
+      @body.delete('code')
       @body.each { |k, v| message << indent("#{format k}: #{format v}") }
       message
     end
@@ -22,6 +23,8 @@ module TimeDoctor
 
     def format(str)
       str.tr('_', ' ').capitalize
+    rescue NoMethodError
+      str
     end
   end
 

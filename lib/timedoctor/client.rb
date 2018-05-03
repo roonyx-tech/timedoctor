@@ -14,9 +14,9 @@ module TimeDoctor
   class Client
     CORE = TimeDoctor::Core
 
-    def initialize(token = nil)
-      @token = token || Config[:access_token]
-      raise 'The access token is not specified' unless @token
+    def initialize(token = Config[:access_token])
+      raise 'The access token is not specified' unless token
+      @token = token
     end
 
     def absent_and_late

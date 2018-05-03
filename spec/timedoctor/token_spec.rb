@@ -1,11 +1,12 @@
 RSpec.describe TimeDoctor::Token do
+  let(:entrypoint) do
+    "#{entry}/oauth/v2/token?client_id=CLIENT_ID&client_secret=CLIENT_SECRET" \
+    '&grant_type=refresh_token&refresh_token=REFRESH_TOKEN&_format=json'
+  end
+
   context 'when refresh token is valid' do
     let!(:refresh_stub) do
-      stub_request(:get, "#{entry}/oauth/v2/token" \
-                         '?client_id=CLIENT_ID' \
-                         '&client_secret=CLIENT_SECRET' \
-                         '&grant_type=refresh_token' \
-                         '&refresh_token=REFRESH_TOKEN')
+      stub_request(:get, entrypoint)
         .to_return(status: 200,
                    body: JSON.generate(access_token:  'NEW_ACCESS_TOKEN',
                                        refresh_token: 'NEW_REFRESH_TOKEN'))
@@ -24,11 +25,7 @@ RSpec.describe TimeDoctor::Token do
 
   context 'when refresh token is not valid' do
     let!(:refresh_stub) do
-      stub_request(:get, "#{entry}/oauth/v2/token" \
-                         '?client_id=CLIENT_ID' \
-                         '&client_secret=CLIENT_SECRET' \
-                         '&grant_type=refresh_token' \
-                         '&refresh_token=REFRESH_TOKEN')
+      stub_request(:get, entrypoint)
         .to_return(status: 400, body: JSON.generate(error: true,
                                                     message: 'message'))
     end
@@ -45,11 +42,7 @@ RSpec.describe TimeDoctor::Token do
 
   context 'when unknown error' do
     let!(:refresh_stub) do
-      stub_request(:get, "#{entry}/oauth/v2/token" \
-                         '?client_id=CLIENT_ID' \
-                         '&client_secret=CLIENT_SECRET' \
-                         '&grant_type=refresh_token' \
-                         '&refresh_token=REFRESH_TOKEN')
+      stub_request(:get, entrypoint)
         .to_return(status: 500, body: JSON.generate(error: true,
                                                     message: 'message'))
     end

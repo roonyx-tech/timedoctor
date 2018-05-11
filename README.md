@@ -1,6 +1,6 @@
 # TimeDoctor
 
-[![Build Status](https://travis-ci.org/EugeneYak/timedoctor.svg?branch=master)](https://travis-ci.org/EugeneYak/timedoctor)
+[![Build Status](https://travis-ci.org/EugeneYak/timedoctor-ruby.svg?branch=master)](https://travis-ci.org/EugeneYak/timedoctor-ruby)
 [![codecov](https://codecov.io/gh/EugeneYak/timedoctor/branch/master/graph/badge.svg)](https://codecov.io/gh/EugeneYak/timedoctor)
 
 ## Installation

@@ -1,20 +1,27 @@
+require 'ostruct'
+
 module TimeDoctor
-  module Config
+  class Config
     class << self
+      def configure(options = {}, &blk)
+        @config = OpenStruct.new(options)
+        instance_exec(@config, &blk) if block_given?
+      end
+
       def config
-        @config ||= {}
+        @config ||= OpenStruct.new
       end
 
-      def configure(conf = {})
-        config.merge!(conf)
+      def [](key)
+        config[key]
       end
 
-      def [](index)
-        config[index]
+      def []=(key, value)
+        config[key] = value
       end
 
-      def []=(index, value)
-        config[index] = value
+      def inspect
+        config.to_h
       end
     end
   end

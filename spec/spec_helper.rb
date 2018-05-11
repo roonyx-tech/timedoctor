@@ -3,7 +3,8 @@ require 'bundler/setup'
 require 'webmock/rspec'
 require 'timedoctor'
 require_relative 'timedoctor/declarations'
-require_relative 'timedoctor/fake_client'
+
+require 'securerandom'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

@@ -14,45 +14,45 @@ module TimeDoctor
   class Client
     CORE = TimeDoctor::Core
 
-    def initialize(token = Config[:access_token])
-      raise 'The access token is not specified' unless token
-      @token = token
+    def initialize(payload = {})
+      raise EmptyAccessToken unless payload[:access_token]
+      @worker = Worker.new(payload)
     end
 
     def absent_and_late
-      CORE::AbsentAndLate.new(@token)
+      CORE::AbsentAndLate.new(@worker)
     end
 
     def companies
-      CORE::Companies.new(@token)
+      CORE::Companies.new(@worker)
     end
 
     def payrolls
-      CORE::Payrolls.new(@token)
+      CORE::Payrolls.new(@worker)
     end
 
     def poortime
-      CORE::Poortime.new(@token)
+      CORE::Poortime.new(@worker)
     end
 
     def projects
-      CORE::Projects.new(@token)
+      CORE::Projects.new(@worker)
     end
 
     def tasks
-      CORE::Tasks.new(@token)
+      CORE::Tasks.new(@worker)
     end
 
     def users
-      CORE::Users.new(@token)
+      CORE::Users.new(@worker)
     end
 
     def web_and_app
-      CORE::WebAndApp.new(@token)
+      CORE::WebAndApp.new(@worker)
     end
 
     def worklogs
-      CORE::Worklogs.new(@token)
+      CORE::Worklogs.new(@worker)
     end
   end
 end

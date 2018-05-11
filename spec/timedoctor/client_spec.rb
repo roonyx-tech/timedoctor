@@ -1,9 +1,12 @@
 RSpec.describe TimeDoctor::Client do
+  let(:access_token) { 'ACCESS_TOKEN' }
+  let(:client) { described_class.new(access_token: access_token) }
+
   it '.initialize' do
     expect { described_class.new }
       .to raise_error(RuntimeError, 'The access token is not specified')
 
-    expect(described_class.new('abc')).to be_a TimeDoctor::Client
+    expect(client).to be_a TimeDoctor::Client
   end
 
   it '.absent_and_late' do

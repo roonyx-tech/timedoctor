@@ -1,7 +1,9 @@
 RSpec.describe TimeDoctor::Core::Payrolls do
+  subject { client.payrolls }
+
   let!(:list_stub) do
     stub_request(:get, "#{entry}/v1.1/companies/#{company_id}/payrolls" \
-                         "?_format=json&access_token=#{token}")
+                         "?_format=json&access_token=#{access_token}")
       .to_return(response)
   end
 
@@ -11,12 +13,12 @@ RSpec.describe TimeDoctor::Core::Payrolls do
   end
 
   it '.list' do
-    client.list(company_id: company_id)
+    subject.list(company_id: company_id)
     expect(list_stub).to have_been_requested
   end
 
   it '.update' do
-    client.update(company_id: company_id, payroll_id: payroll_id)
+    subject.update(company_id: company_id, payroll_id: payroll_id)
     expect(update_stub).to have_been_requested
   end
 end

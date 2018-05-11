@@ -33,4 +33,9 @@ module TimeDoctor
   class UnknownError < TimeDoctorError; end
 
   class InvalidRefreshTokenError < TimeDoctorError; end
+
+  class EmptyAccessToken < StandardError
+    attr_reader :message
+    @message = 'The access token is not specified'
+  end
 end

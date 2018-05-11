@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/EugeneYak/timedoctor-ruby.svg?branch=master)](https://travis-ci.org/EugeneYak/timedoctor-ruby)
 [![codecov](https://codecov.io/gh/EugeneYak/timedoctor/branch/master/graph/badge.svg)](https://codecov.io/gh/EugeneYak/timedoctor)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fefa2e9bc6ec9fa5917c/maintainability)](https://codeclimate.com/github/EugeneYak/timedoctor-ruby/maintainability)
 
 ## Installation
 

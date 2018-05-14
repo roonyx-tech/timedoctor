@@ -39,17 +39,14 @@ module TimeDoctor
                            grant_type:    :refresh_token,
                            _format:       :json
 
-      case response.status
-      when 200
-        data = JSON.parse(response.body, symbolize_names: true)
-        @payload[:access_token]  = data[:access_token]
-        @payload[:refresh_token] = data[:refresh_token]
+      raise UnknownError, response if response.status != 200
 
-        utl = fetch_param(:update_tokens_lambda)
-        utl.call(data, @payload) if utl
-      else
-        raise UnknownError, response
-      end
+      data = JSON.parse(response.body, symbolize_names: true)
+      @payload[:access_token]  = data[:access_token]
+      @payload[:refresh_token] = data[:refresh_token]
+
+      utl = fetch_param(:update_tokens_lambda)
+      utl.call(data, @payload) if utl
     end
 
     def fetch_param(name)

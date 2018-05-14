@@ -62,6 +62,31 @@ RSpec.describe TimeDoctor::Worker do
         expect(updated_stub).to have_been_requested
       end
     end
+
+    context 'when unknown error while refresh token' do
+      let!(:inspired_stub) do
+        stub_request(:post, 'https://webapi.timedoctor.com/expired_token')
+          .with(body: { _format: 'json', access_token: access_token })
+          .to_return(status: 401, body: JSON.generate({}))
+      end
+
+      let!(:refresh_token_stub) do
+        stub_request(:get, 'https://webapi.timedoctor.com/oauth/v2/token' \
+                         '?_format=json' \
+                         "&client_id=#{client_id}" \
+                         "&client_secret=#{client_secret}" \
+                         '&grant_type=refresh_token' \
+                         "&refresh_token=#{refresh_token}")
+          .to_return(status: 400, body: JSON.generate(error: 'error'))
+      end
+
+      it 'expired_token' do
+        expect { subject.expired_token }.to raise_error TimeDoctor::UnknownError
+
+        expect(inspired_stub).to have_been_requested
+        expect(refresh_token_stub).to have_been_requested
+      end
+    end
   end
 
   context 'when unknown error' do
@@ -75,31 +100,6 @@ RSpec.describe TimeDoctor::Worker do
       expect { subject.unknown_error }.to raise_error TimeDoctor::UnknownError
 
       expect(unknown_error_stub).to have_been_requested
-    end
-  end
-
-  context 'when unknown error while refresh token' do
-    let!(:inspired_stub) do
-      stub_request(:post, 'https://webapi.timedoctor.com/expired_token')
-        .with(body: { _format: 'json', access_token: access_token })
-        .to_return(status: 401, body: JSON.generate({}))
-    end
-
-    let!(:refresh_token_stub) do
-      stub_request(:get, 'https://webapi.timedoctor.com/oauth/v2/token' \
-                         '?_format=json' \
-                         "&client_id=#{client_id}" \
-                         "&client_secret=#{client_secret}" \
-                         '&grant_type=refresh_token' \
-                         "&refresh_token=#{refresh_token}")
-        .to_return(status: 400, body: JSON.generate(error: 'error'))
-    end
-
-    it 'expired_token' do
-      expect { subject.expired_token }.to raise_error TimeDoctor::UnknownError
-
-      expect(inspired_stub).to have_been_requested
-      expect(refresh_token_stub).to have_been_requested
     end
   end
 end

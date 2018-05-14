@@ -4,7 +4,7 @@ module TimeDoctor
 
     attr_reader :payload
 
-    def initialize(payload = {})
+    def initialize(payload)
       raise EmptyAccessToken unless payload[:access_token]
 
       @payload = payload
@@ -22,35 +22,11 @@ module TimeDoctor
         JSON.parse(response.body, symbolize_names: true)
       when 401
         raise UnauthorizedError, response if badly
-        refresh_tokens
+        Token.refresh(@payload)
         exchange(method, url, params, true)
       else
         raise UnknownError, response
       end
-    end
-
-    private
-
-    def refresh_tokens
-      response = @conn.get '/oauth/v2/token',
-                           refresh_token: fetch_param(:refresh_token),
-                           client_id:     fetch_param(:client_id),
-                           client_secret: fetch_param(:client_secret),
-                           grant_type:    :refresh_token,
-                           _format:       :json
-
-      raise UnknownError, response if response.status != 200
-
-      data = JSON.parse(response.body, symbolize_names: true)
-      @payload[:access_token]  = data[:access_token]
-      @payload[:refresh_token] = data[:refresh_token]
-
-      utl = fetch_param(:update_tokens_lambda)
-      utl.call(data, @payload) if utl
-    end
-
-    def fetch_param(name)
-      @payload[name] || Config[name]
     end
   end
 end

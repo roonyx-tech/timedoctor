@@ -10,4 +10,7 @@ Metrics/BlockLength:
 
 Metrics/MethodLength:
   Max: 20
-  
+
+Lint/ScriptPermission:
+  Exclude:
+    - bin/console

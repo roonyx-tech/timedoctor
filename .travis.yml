@@ -1,16 +1,15 @@
 language: ruby
 
 jobs:
-  includes:
-    - stage: test
-      rvm:
-        - 2.4
-        - 2.3
-        - 2.2
-        - 2.1
-      script:
-        - bundle exec rubocop
-        - bundle exec rspec
+  - stage: test
+    rvm:
+      - 2.4
+      - 2.3
+      - 2.2
+      - 2.1
+    script:
+      - bundle exec rubocop
+      - bundle exec rspec
 
-    - stage: deploy
-      script: echo DEPLOY
+  - stage: deploy
+    script: echo DEPLOY

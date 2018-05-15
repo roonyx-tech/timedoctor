@@ -6,16 +6,10 @@ rvm:
   - 2.2
   - 2.1
 
-script:
-  - bundle exec rubocop
-  - bundle exec rspec
-
 jobs:
-
-    - stage: test
-      script:
-        - bundle exec rubocop
-        - bundle exec rspec
-
-    - stage: deploy
-      script: echo DEPLOY
+  - stage: test
+    script:
+      - bundle exec rubocop
+      - bundle exec rspec
+ - stage: deploy
+    script: echo DEPLOY

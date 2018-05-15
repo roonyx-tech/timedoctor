@@ -1,5 +1,9 @@
 language: ruby
 
+stages:
+  - test
+  - deploy
+
 jobs:
   - stage: test
     rvm:

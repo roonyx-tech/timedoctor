@@ -14,12 +14,9 @@ module TimeDoctor
   class Client
     CORE = TimeDoctor::Core
 
-    attr_reader :payload
-
-    def initialize(payload = {})
-      raise EmptyAccessToken unless payload[:access_token]
-      @payload = Payload.new(payload)
-      @worker = Worker.new(@payload)
+    def initialize(config = {})
+      @config = Config.new(config)
+      @worker = Worker.new(@config)
     end
 
     def absent_and_late

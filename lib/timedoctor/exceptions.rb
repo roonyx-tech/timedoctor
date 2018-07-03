@@ -28,11 +28,15 @@ module TimeDoctor
     end
   end
 
-  class UnauthorizedError < TimeDoctorError; end
+  class UnauthorizedError < StandardError
+    def initialize(data)
+      @message = data
+    end
+
+    attr_reader :message
+  end
 
   class UnknownError < TimeDoctorError; end
-
-  class InvalidRefreshTokenError < TimeDoctorError; end
 
   class EmptyAccessToken < StandardError
     attr_reader :message

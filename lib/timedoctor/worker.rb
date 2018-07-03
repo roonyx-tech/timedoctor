@@ -2,28 +2,27 @@ module TimeDoctor
   class Worker
     ENTRY = 'https://webapi.timedoctor.com/'.freeze
 
-    attr_reader :payload
+    attr_reader :config, :conn
 
-    def initialize(payload)
-      raise EmptyAccessToken unless payload[:access_token]
+    def initialize(config)
+      raise EmptyAccessToken unless config[:access_token]
 
-      @payload = payload
-      @conn    = Faraday.new(url: ENTRY)
+      @config = config
+      @conn   = Faraday.new(url: ENTRY)
     end
 
-    def exchange(method, url, params = {}, badly = false)
-      params[:access_token] = @payload[:access_token]
+    def exchange(method, url, params = {})
+      params[:access_token] = config[:access_token]
       params[:_format]      = :json
 
-      response = @conn.public_send method, url, params
+      response = conn.public_send method, url, params
 
       case response.status
       when 200
         JSON.parse(response.body, symbolize_names: true)
       when 401
-        raise UnauthorizedError, response if badly
-        Token.refresh(@payload)
-        exchange(method, url, params, true)
+        Token.refresh(config)
+        exchange(method, url, params)
       else
         raise UnknownError, response
       end

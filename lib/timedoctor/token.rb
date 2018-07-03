@@ -24,6 +24,7 @@ module TimeDoctor
         config[:access_token]  = data[:access_token]
         config[:refresh_token] = data[:refresh_token]
         config[:on_token_authorize].call(data, config)
+        data
       when 400
         config[:on_token_authorize_error].call(data, config)
       else
@@ -46,6 +47,7 @@ module TimeDoctor
         config[:access_token]  = data[:access_token]
         config[:refresh_token] = data[:refresh_token]
         config[:on_token_refresh].call(data, config)
+        data
       when 400
         config[:on_token_refresh_error].call(data, config)
       else

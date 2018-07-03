@@ -28,14 +28,12 @@ RSpec.describe TimeDoctor::Token do
     it 'when success' do
       result = nil
 
-      config = {
-        client_id: client_id,
-        client_secret: client_secret,
-        code: 'CODE',
-        redirect_uri: 'example.com/redirect',
-        on_token_authorize: ->(_, _) { result = :success }
-      }
-      subject.authorize config
+      config = TimeDoctor::Config.new client_id: client_id,
+                                      client_secret: client_secret,
+                                      code: 'CODE',
+                                      redirect_uri: 'example.com/redirect',
+                                      on_token_authorize: ->(_, _) { result = :success }
+      subject.new(config).fetch
       expect(authorize_stub).to have_been_requested
       expect(result).to be(:success)
     end
@@ -43,14 +41,12 @@ RSpec.describe TimeDoctor::Token do
     it 'when failure' do
       result = nil
 
-      config = {
-        client_id: client_id,
-        client_secret: client_secret,
-        code: 'BAD_CODE',
-        redirect_uri: 'example.com/redirect',
-        on_token_authorize_error: ->(_, _) { result = :fail }
-      }
-      subject.authorize config
+      config = TimeDoctor::Config.new client_id: client_id,
+                                      client_secret: client_secret,
+                                      code: 'BAD_CODE',
+                                      redirect_uri: 'example.com/redirect',
+                                      on_token_authorize_error: ->(_, _) { result = :fail }
+      subject.new(config).fetch
       expect(failure_authorize_stub).to have_been_requested
       expect(result).to be(:fail)
     end
@@ -81,13 +77,11 @@ RSpec.describe TimeDoctor::Token do
     it 'when success' do
       result = nil
 
-      config = {
-        client_id: client_id,
-        client_secret: client_secret,
-        refresh_token: 'RT',
-        on_token_refresh: ->(_, _) { result = :success }
-      }
-      subject.refresh config
+      config = TimeDoctor::Config.new client_id: client_id,
+                                      client_secret: client_secret,
+                                      refresh_token: 'RT',
+                                      on_token_refresh: ->(_, _) { result = :success }
+      subject.new(config).refresh
       expect(refresh_stub).to have_been_requested
       expect(result).to be(:success)
     end
@@ -95,13 +89,11 @@ RSpec.describe TimeDoctor::Token do
     it 'when failure' do
       result = nil
 
-      config = {
-        client_id: client_id,
-        client_secret: client_secret,
-        refresh_token: 'BAD',
-        on_token_refresh_error: ->(_, _) { result = :fail }
-      }
-      subject.refresh config
+      config = TimeDoctor::Config.new client_id: client_id,
+                                      client_secret: client_secret,
+                                      refresh_token: 'BAD',
+                                      on_token_refresh_error: ->(_, _) { result = :fail }
+      subject.new(config).refresh
       expect(failure_refresh_stub).to have_been_requested
       expect(result).to be(:fail)
     end

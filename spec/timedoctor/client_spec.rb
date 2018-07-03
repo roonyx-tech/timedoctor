@@ -3,9 +3,6 @@ RSpec.describe TimeDoctor::Client do
   let(:client) { described_class.new(access_token: access_token) }
 
   it '.initialize' do
-    expect { described_class.new }
-      .to raise_error(TimeDoctor::EmptyAccessToken)
-
     expect(client).to be_a TimeDoctor::Client
   end
 

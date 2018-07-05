@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    timedoctor (0.3.0)
+    timedoctor (0.3.2)
       faraday (~> 0.15.0)
 
 GEM

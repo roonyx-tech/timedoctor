@@ -27,6 +27,7 @@ module TimeDoctor
         data
       when 400
         config[:on_token_authorize_error].call(data, config)
+        nil
       else
         raise UnknownError, response
       end
@@ -50,6 +51,7 @@ module TimeDoctor
         data
       when 400
         config[:on_token_refresh_error].call(data, config)
+        nil
       else
         raise UnknownError, response
       end

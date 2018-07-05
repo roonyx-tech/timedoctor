@@ -21,8 +21,7 @@ module TimeDoctor
       when 200
         JSON.parse(response.body, symbolize_names: true)
       when 401
-        Token.new(config).refresh
-        exchange(method, url, params)
+        exchange(method, url, params) if Token.new(config).refresh
       else
         raise UnknownError, response
       end

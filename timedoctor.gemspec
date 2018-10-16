@@ -5,11 +5,11 @@ require 'version'
 Gem::Specification.new do |spec|
   spec.name          = 'timedoctor'
   spec.version       = TimeDoctor::VERSION
-  spec.authors       = ['Eugene Yak']
-  spec.email         = ['geneayak@gmail.com']
+  spec.authors       = ['Roonyx']
+  spec.email         = ['go@roonyx.tech']
 
   spec.summary       = 'Client for TimeDoctor API'
-  spec.homepage      = 'https://github.com/EugeneYak/timedoctor'
+  spec.homepage      = 'https://github.com/roonyx/timedoctor'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

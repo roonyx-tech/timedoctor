@@ -37,6 +37,41 @@ When url is visited and permission to access user account is successfuly granted
 
 Optionally, you can validate `state` value to make sure that it's same as generated previously for this user.
 
+### Configuration
+To configure Timedoctor application for Rails, create `config/initializers/timedoctor.rb` with following setup:
+```ruby
+TimeDoctor::Config.configure do |config|
+  # Required
+  config.client_id = '<YOUR_CLIENT_ID>'
+  config.client_secret = '<YOUR_CLIENT_SECRET>'
+end
+```
+Optionally, you can also define callbacks that will be invoked during token acquisition
+```ruby
+TimeDoctor::Config.configure do |config|
+  ...
+
+  # Invoked when token acquired successfuly
+  config.on_token_authorize = lambda do |data, config|
+  end
+
+  # Invoked when token acquisition failed
+  config.on_token_authorize_error = lambda do |error, config|
+  end
+
+  # Invoked when token refresh completed successfuly
+  config.on_token_refresh = lambda do |data, config|
+    # You may want to use this callback to store updated tokens
+    access_token = data[:access_token]
+    refresh_token = data[:refresh_token]
+  end
+
+  # Invoked when token refresh failed, you may want to notify user here that integration is broken
+  config.on_token_refresh_error = lambda do |error, config|
+  end
+end
+```
+
 ### Generating access token
 To generate access token to work with API you will need to use `code` that you received as parameter to your callback endpoint:
 ```ruby

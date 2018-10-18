@@ -9,52 +9,63 @@ module TimeDoctor
     attr_reader :config
 
     def fetch
-      response = Faraday.get ENTRY,
-                             client_id:     config[:client_id],
-                             client_secret: config[:client_secret],
-                             code:          config[:code],
-                             redirect_uri:  config[:redirect_uri],
-                             grant_type:    :authorization_code,
-                             _format:       :json
+      response = get_token_data(
+        code: config[:code],
+        redirect_uri: config[:redirect_uri],
+        grant_type: :authorization_code
+      )
+      process_response(
+        response: response,
+        callback_base_name: :on_token_authorize
+      )
+    end
 
+    def refresh
+      response = get_token_data(
+        refresh_token: config[:refresh_token],
+        grant_type: :refresh_token
+      )
+      process_response(
+        response: response,
+        callback_base_name: :on_token_refresh
+      )
+    end
+
+    private
+
+    def get_token_data(params)
+      default_params = {
+        client_id: config[:client_id],
+        client_secret: config[:client_secret],
+        _format: :json
+      }
+      Faraday.get(ENTRY, default_params.merge(params))
+    end
+
+    def process_response(response:, callback_base_name:)
       data = JSON.parse(response.body, symbolize_names: true)
-
       case response.status
       when 200
-        config[:access_token]  = data[:access_token]
-        config[:refresh_token] = data[:refresh_token]
-        config[:on_token_authorize].call(data, config)
+        update_tokens(data)
+        invoke_callback(callback_base_name, data)
         data
       when 400
-        config[:on_token_authorize_error].call(data, config)
+        invoke_callback("#{callback_base_name}_error", data)
         nil
       else
         raise UnknownError, response
       end
     end
 
-    def refresh
-      response = Faraday.get ENTRY,
-                             refresh_token: config[:refresh_token],
-                             client_id:     config[:client_id],
-                             client_secret: config[:client_secret],
-                             grant_type:    :refresh_token,
-                             _format:       :json
+    def update_tokens(data)
+      config[:access_token] = data[:access_token]
+      config[:refresh_token] = data[:refresh_token]
+    end
 
-      data = JSON.parse(response.body, symbolize_names: true)
-
-      case response.status
-      when 200
-        config[:access_token]  = data[:access_token]
-        config[:refresh_token] = data[:refresh_token]
-        config[:on_token_refresh].call(data, config)
-        data
-      when 400
-        config[:on_token_refresh_error].call(data, config)
-        nil
-      else
-        raise UnknownError, response
-      end
+    def invoke_callback(callback_name, data)
+      callback = config[callback_name]
+      return unless callback.respond_to?(:call)
+      callback.call(data, config)
     end
   end
 end

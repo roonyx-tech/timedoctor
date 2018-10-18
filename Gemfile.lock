@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    timedoctor (0.3.2)
+    timedoctor (0.3.3)
       faraday (~> 0.15.0)
 
 GEM
@@ -18,7 +18,7 @@ GEM
       safe_yaml (~> 1.0.0)
     diff-lcs (1.3)
     docile (1.3.0)
-    faraday (0.15.1)
+    faraday (0.15.3)
       multipart-post (>= 1.2, < 3)
     hashdiff (0.3.7)
     json (2.1.0)
